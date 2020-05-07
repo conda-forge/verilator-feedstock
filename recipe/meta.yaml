@@ -12,7 +12,7 @@ source:
     - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -31,8 +31,9 @@ requirements:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - make
-    - python
     - perl
+  run_constrained:
+    - python  >=3.5
 
 test:
   source_files:
