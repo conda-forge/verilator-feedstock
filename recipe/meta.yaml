@@ -12,6 +12,7 @@ source:
     - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
 
 build:
+  noarch: python
   number: 0
   skip: true  # [win]
 
