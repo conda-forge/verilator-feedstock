@@ -1,5 +1,5 @@
 {% set name = "verilator" %}
-{% set version = "4.034" %}
+{% set version = "4.204" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 17a087fc74fd1ab035a43ba38d6f6198150ee11b20077855404ddb4c1620c6b7
-  patches:
-    - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
+  sha256: dbad9bd3cac34e63bbd945fff9a59eaabe31dae1e1c93c847d0f894db9919498
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
+  has_prefix_files:
+    - share/verilator/include/verilated.mk
 
 requirements:
   build:
@@ -24,6 +24,7 @@ requirements:
     - bison
     - python
     - perl
+    - sed
   host:
     - zlib
     - flex  # need to link against it for target
