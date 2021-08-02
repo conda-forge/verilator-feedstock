@@ -13,7 +13,9 @@ source:
 
 build:
   number: 0
-  skip: True  # [win]
+  skip: true  # [win]
+  has_prefix_files:
+    - share/verilator/include/verilated.mk
 
 requirements:
   build:
@@ -24,6 +26,7 @@ requirements:
     - bison
     - python
     - perl
+    - sed
   host:
     - zlib
     - flex  # need to link against it for target
