@@ -18,3 +18,5 @@ fi
 
 make -j$CPU_COUNT test
 make install
+
+sed -i "s|$BUILD_PREFIX|$PREFIX|g" $PREFIX/share/verilator/include/verilated.mk
