@@ -10,6 +10,7 @@ source:
   sha256: 17a087fc74fd1ab035a43ba38d6f6198150ee11b20077855404ddb4c1620c6b7
   patches:
     - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
+    - patches/0002-Fix-build-with-Bison-3.7-and-newer-2505.patch
 
 build:
   number: 1
