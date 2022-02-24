@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: ef7b1e6ddb715ddb3cc998fcbefc7150cfa2efc5118cf43ddb594bf41ea41cc7
-  patches:
-    - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
 
 build:
   number: 0
