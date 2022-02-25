@@ -1,5 +1,5 @@
 {% set name = "verilator" %}
-{% set version = "4.034" %}
+{% set version = "4.218" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,10 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 17a087fc74fd1ab035a43ba38d6f6198150ee11b20077855404ddb4c1620c6b7
-  patches:
-    - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
-    - patches/0002-Fix-build-with-Bison-3.7-and-newer-2505.patch
+  sha256: ef7b1e6ddb715ddb3cc998fcbefc7150cfa2efc5118cf43ddb594bf41ea41cc7
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
