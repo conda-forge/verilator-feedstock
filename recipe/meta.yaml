@@ -2,7 +2,7 @@
 {% set version = "4.034" %}
 
 package:
-  name: {{ name|lower }}
+  name: verilator-packages
   version: {{ version }}
 
 source:
@@ -11,44 +11,80 @@ source:
   patches:
     - patches/0001-Use-usr-bin-env-perl-in-lieu-of-usr-bin-perl.patch
     - patches/0002-Fix-build-with-Bison-3.7-and-newer-2505.patch
+    - patches/0003-Fix-missing-install-of-vl_file_copy-vl_hier_graph-31.patch
+    - patches/0004-add-message-suggesting-verilator-debug-package.patch
 
 build:
-  number: 2
-  skip: true  # [win]
-  has_prefix_files:
-    - share/verilator/include/verilated.mk
+  number: 3
+  skip: true  # [not (osx | linux64)]
 
 requirements:
   build:
-    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - autoconf
     - make
     - bison
-    - python
+    - python   >=3
     - perl
     - sed
+    - git # for patching
   host:
     - zlib
     - flex  # need to link against it for target
   run:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - {{ compiler('cxx') | replace('gxx_linux','gxx_impl_linux') | replace('_osx-64', '') }}
+    - {{ pin_compatible('flex') }}
     - make
     - perl
   run_constrained:
-    - python  >=3.5
+    - python  >=3
 
+# test requirements aren't supported in subpackages, so we run the tests
+# on the metapackage
 test:
-  source_files:
-    - examples/make_hello_c
-  commands:
-    - verilator --version
-    - cd examples/make_hello_c && make clean default
+  requires:
+    - pkgconfig
+    - cmake
+    - python >=3
+    - graphviz
+    # only need C compiler because cmake bails if it doesn't have one.
+    # at least with the CMakeLists.txt in the examples
+    - {{ compiler('c') }}
+    # re-install the default compiler package with activation scripts
+    # because it is the easiest way to get cmake to work in the sanity checks
+    # for cmake.  However, normal makefile based tests do not need this and
+    # will work fine because verilated.mk builds in the path 
+    - {{ compiler('cxx') }}
+
+outputs:
+  - name: verilator
+    script: install.sh
+    requirements:
+      build:
+        - make
+        - ripgrep
+        - perl # avoid BSD sed weirdness
+      host:
+        - zlib
+        - flex  # need to link against it for target
+      run:
+        - {{ compiler('cxx') }}  # [osx]
+        # there must be a way to derive this from compiler('cxx') but this should work
+        - gxx_impl_linux-64  # [linux64]
+        - {{ pin_compatible('flex') }}
+        - make
+        - perl
+      run_constrained:
+        - python  >=3
+  - name: verilator-debug
+    script: install.sh
+    requirements:
+      run:
+        - {{ pin_subpackage('verilator', exact=True) }}
 
 about:
   home: https://veripool.org/wiki/verilator
-  license: GPL-3.0-only OR Artistic-2.0
+  license: LGPL-3.0-only OR Artistic-2.0
   license_file:
     - LICENSE
     - Artistic

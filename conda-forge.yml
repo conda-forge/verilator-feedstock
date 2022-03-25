@@ -1,2 +1,3 @@
 conda_forge_output_validation: true
-upload_on_branch: master
+azure:
+  store_build_artifacts: true
