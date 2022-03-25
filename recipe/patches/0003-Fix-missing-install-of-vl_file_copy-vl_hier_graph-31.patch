@@ -1,0 +1,31 @@
+From c3bec344a4df6ead35e7311f9f909b8fe18177d3 Mon Sep 17 00:00:00 2001
+From: Wilson Snyder <wsnyder@wsnyder.org>
+Date: Tue, 12 Oct 2021 20:20:21 -0400
+Subject: [PATCH] Fix missing install of vl_file_copy/vl_hier_graph (#3165).
+
+---
+ Makefile.in | 6 ++++--
+ 1 files changed
+
+ timsnyder modified to only take functional change from the future
+
+diff --git a/Makefile.in b/Makefile.in
+index 06574e83f..c381eda44 100644
+--- a/Makefile.in
++++ b/Makefile.in
+@@ -207,8 +207,10 @@ VL_INST_INC_SRCDIR_FILES = \
+ 	include/vltstd/*.[chv]* \
+ 
+ VL_INST_DATA_SRCDIR_FILES = \
+-	examples/*/*.[chv]*  examples/*/Makefile* \
+-	examples/*/CMakeLists.txt
++	examples/*/*.[chv]* \
++	examples/*/CMakeLists.txt \
++	examples/*/Makefile* \
++	examples/*/vl_* \
+ 
+ installbin:
+ 	$(MKINSTALLDIRS) $(DESTDIR)$(bindir)
+-- 
+2.35.1
+
