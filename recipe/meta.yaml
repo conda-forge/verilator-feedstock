@@ -28,7 +28,7 @@ requirements:
     - autoconf
     - make
     - bison
-    - python
+    - python   >=3
     - perl
     - sed
     - git # for patching
