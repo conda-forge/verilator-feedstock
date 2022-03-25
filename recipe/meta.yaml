@@ -16,9 +16,7 @@ source:
 
 build:
   number: 3
-  skip: true  # [win]
-  #has_prefix_files:
-  #- share/verilator/include/verilated.mk
+  skip: true  # [not (osx | linux64)]
 
 requirements:
   build:
@@ -34,9 +32,7 @@ requirements:
     - zlib
     - flex  # need to link against it for target
   run:
-    - {{ compiler('cxx') }}  # [osx]
-    # there must be a way to derive this from compiler('cxx') but this should work
-    - gxx_impl_linux-64  # [linux64]
+    - {{ compiler('cxx') | replace('gxx_','gxx_impl_') | replace('_osx-64', '') }}
     - {{ pin_compatible('flex') }}
     - make
     - perl
