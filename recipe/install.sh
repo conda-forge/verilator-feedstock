@@ -17,7 +17,7 @@ case "$PKG_NAME" in
 
 	# fixup the prefix in verilated.mk so that it will get munged when installing the package
 	# avoid weird BSD sed behavior of thinking the command is the backup extension by using perl
-	perl -i "s|$BUILD_PREFIX|$PREFIX|g" "$PREFIX/share/verilator/include/verilated.mk"
+	perl -i -pe "s|$BUILD_PREFIX|$PREFIX|g" "$PREFIX/share/verilator/include/verilated.mk"
 
 	set +e
 	rg -l "$BUILD_PREFIX" "$PREFIX/share/verilator"
