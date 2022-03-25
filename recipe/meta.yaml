@@ -17,8 +17,6 @@ source:
 build:
   number: 3
   skip: true  # [not (osx | linux64)]
-  ignore_run_exports:
-    - python
   #has_prefix_files:
   #- share/verilator/include/verilated.mk
 
@@ -43,7 +41,7 @@ requirements:
     - make
     - perl
   run_constrained:
-    - python  >=3.5
+    - python  >=3
 
 # test requirements aren't supported in subpackages, so we run the tests
 # on the metapackage
@@ -81,7 +79,7 @@ outputs:
         - make
         - perl
       run_constrained:
-        - python  >=3.5
+        - python  >=3
   - name: verilator-debug
     script: install.sh
     requirements:
