@@ -32,7 +32,7 @@ requirements:
     - zlib
     - flex  # need to link against it for target
   run:
-    - {{ compiler('cxx') | replace('gxx_','gxx_impl_') | replace('_osx-64', '') }}
+    - {{ compiler('cxx') | replace('gxx_linux','gxx_impl_linux') | replace('_osx-64', '') }}
     - {{ pin_compatible('flex') }}
     - make
     - perl
