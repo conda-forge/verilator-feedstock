@@ -45,7 +45,7 @@ test:
   requires:
     - pkgconfig
     - cmake
-    - python
+    - python >=3
     - graphviz
     # only need C compiler because cmake bails if it doesn't have one.
     # at least with the CMakeLists.txt in the examples
