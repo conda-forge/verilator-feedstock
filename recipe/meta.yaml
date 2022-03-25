@@ -13,14 +13,13 @@ source:
     - patches/0002-Fix-build-with-Bison-3.7-and-newer-2505.patch
 
 build:
-  number: 2
-  skip: true  # [win]
+  number: 3
+  skip: true  # [not (osx | linux-64)]
   has_prefix_files:
     - share/verilator/include/verilated.mk
 
 requirements:
   build:
-    - {{ compiler('c') }}
     - {{ compiler('cxx') }}
     - autoconf
     - make
@@ -32,8 +31,10 @@ requirements:
     - zlib
     - flex  # need to link against it for target
   run:
-    - {{ compiler('c') }}
-    - {{ compiler('cxx') }}
+    - {{ compiler('cxx') }}  # [osx]
+    # there must be a way to derive this from compiler('cxx') but this should work
+    - gxx_impl_linux-64  # [linux-64]
+    - {{ pin_compatible('flex') }}
     - make
     - perl
   run_constrained:
