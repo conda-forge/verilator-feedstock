@@ -67,7 +67,7 @@ outputs:
       build:
         - make
         - ripgrep
-        - gnu-coreutils
+        - perl # avoid BSD sed weirdness
       host:
         - zlib
         - flex  # need to link against it for target
