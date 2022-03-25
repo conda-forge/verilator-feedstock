@@ -16,7 +16,7 @@ source:
 
 build:
   number: 3
-  skip: true  # [not (osx | linux-64)]
+  skip: true  # [not (osx | linux64)]
   #has_prefix_files:
   #- share/verilator/include/verilated.mk
 
@@ -36,38 +36,12 @@ requirements:
   run:
     - {{ compiler('cxx') }}  # [osx]
     # there must be a way to derive this from compiler('cxx') but this should work
-    - gxx_impl_linux-64  # [linux-64]
+    - gxx_impl_linux-64  # [linux64]
     - {{ pin_compatible('flex') }}
     - make
     - perl
   run_constrained:
     - python  >=3.5
-
-outputs:
-  - name: verilator
-    script: install.sh
-    requirements:
-      build:
-        - make
-        - ripgrep
-      host:
-        - zlib
-        - flex  # need to link against it for target
-      run:
-        - {{ compiler('cxx') }}  # [osx]
-        # there must be a way to derive this from compiler('cxx') but this should work
-        - gxx_impl_linux-64  # [linux-64]
-        - {{ pin_compatible('flex') }}
-        - make
-        - perl
-      run_constrained:
-        - python  >=3.5
-
-  - name: verilator-debug
-    script: install.sh
-    requirements:
-      run:
-        - {{ pin_subpackage('verilator', exact=True) }}
 
 # test requirements aren't supported in subpackages, so we run the tests
 # on the metapackage
@@ -85,6 +59,31 @@ test:
     # for cmake.  However, normal makefile based tests do not need this and
     # will work fine because verilated.mk builds in the path 
     - {{ compiler('cxx') }}
+
+outputs:
+  - name: verilator
+    script: install.sh
+    requirements:
+      build:
+        - make
+        - ripgrep
+      host:
+        - zlib
+        - flex  # need to link against it for target
+      run:
+        - {{ compiler('cxx') }}  # [osx]
+        # there must be a way to derive this from compiler('cxx') but this should work
+        - gxx_impl_linux-64  # [linux64]
+        - {{ pin_compatible('flex') }}
+        - make
+        - perl
+      run_constrained:
+        - python  >=3.5
+  - name: verilator-debug
+    script: install.sh
+    requirements:
+      run:
+        - {{ pin_subpackage('verilator', exact=True) }}
 
 about:
   home: https://veripool.org/wiki/verilator
