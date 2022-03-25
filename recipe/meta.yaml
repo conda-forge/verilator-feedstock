@@ -67,6 +67,7 @@ outputs:
       build:
         - make
         - ripgrep
+        - gnu-coreutils
       host:
         - zlib
         - flex  # need to link against it for target

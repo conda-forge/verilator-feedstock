@@ -15,10 +15,9 @@ case "$PKG_NAME" in
 	#mkdir -p "$PREFIX/lib/cmake/verilator"
 	#mv "$PREFIX"/share/verilator/*.cmake "$PREFIX"/lib/cmake/verilator/
 
-
 	# fixup the prefix in verilated.mk so that it will get munged when installing the package
-	sed -i "s|$BUILD_PREFIX|$PREFIX|g" $PREFIX/share/verilator/include/verilated.mk
-
+	# avoid weird BSD sed behavior of thinking the command is the backup extension by using gsed
+	gsed -i "s|$BUILD_PREFIX|$PREFIX|g" "$PREFIX/share/verilator/include/verilated.mk"
 
 	set +e
 	rg -l "$BUILD_PREFIX" "$PREFIX/share/verilator"
