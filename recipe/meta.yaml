@@ -11,7 +11,7 @@ source:
 
 build:
   number: 1
-  skip: true  # [not (osx | linux-64)]
+  skip: true  # [not (osx | linux64)]
   has_prefix_files:
     - share/verilator/include/verilated.mk
 
@@ -30,7 +30,7 @@ requirements:
   run:
     - {{ compiler('cxx') }}  # [osx]
     # there must be a way to derive this from compiler('cxx') but this should work
-    - gxx_impl_linux-64  # [linux-64]
+    - gxx_impl_linux-64  # [linux64]
     - {{ pin_compatible('flex') }}
     - make
     - perl
