@@ -4,3 +4,5 @@ github:
   tooling_branch_name: main
 bot:
   automerge: true
+azure:
+  store_build_artifacts: true

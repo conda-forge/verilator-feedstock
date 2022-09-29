@@ -1,0 +1,33 @@
+From 194959c6a7efc69c1c1576419e7c75b582a3e977 Mon Sep 17 00:00:00 2001
+From: Tim Snyder <snyder.tim@gmail.com>
+Date: Wed, 28 Sep 2022 20:36:49 +0000
+Subject: [PATCH 1/1] use -std=c++17 for verilated.mk verilator/verilator#3588
+
+---
+ configure.ac | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 7caacbd45..8fab134a0 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -354,16 +354,7 @@ AC_SUBST(CFG_CXXFLAGS_PROFILE)
+ # gnu is requried for Cygwin to compile verilated.h successfully
+ #_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=gnu++20)
+ #_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=c++20)
+-case "$(which lsb_release 2>&1 > /dev/null && lsb_release -d)" in
+-*Arch*Linux* | *Ubuntu*22.04*)
+-_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=gnu++17)
+ _MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=c++17)
+-;;
+-esac
+-_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=gnu++14)
+-_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=c++14)
+-_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=gnu++11)
+-_MY_CXX_CHECK_SET(CFG_CXXFLAGS_STD_NEWEST,-std=c++11)
+ AC_SUBST(CFG_CXXFLAGS_STD_NEWEST)
+ 
+ # Flags for compiling Verilator internals including parser, and Verilated files
+-- 
+2.35.1
+
