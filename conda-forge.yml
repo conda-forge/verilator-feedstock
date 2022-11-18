@@ -6,3 +6,5 @@ bot:
   automerge: true
 azure:
   store_build_artifacts: true
+conda_build:
+  pkg_format: '2'
