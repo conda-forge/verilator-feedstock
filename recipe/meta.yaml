@@ -1,5 +1,5 @@
 {% set name = "verilator" %}
-{% set version = "4.228" %}
+{% set version = "5.002" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: be6af6572757013802be5b0ff9c64cbf509e98066737866abaae692fe04edf09
+  sha256: 72d68469fc1262e6288d099062b960a2f65e9425bdb546cba141a2507decd951
   patches:
     - patches/0001-use-std-c-17-for-verilated.mk-verilator-verilator-35.patch
 
