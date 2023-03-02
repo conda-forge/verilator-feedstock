@@ -1,5 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.004" %}
+{% set version = "5.006" %}
+{% set sha256 = "eb4ca4157ba854bc78c86173c58e8bd13311984e964006803dd45dc289450cfe" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +8,13 @@ package:
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 7d193a09eebefdbec8defaabfc125663f10cf6ab0963ccbefdfe704a8a4784d2
+  sha256: {{ sha256 }}
   patches:
     - patches/0001-use-std-c-17-for-verilated.mk-verilator-verilator-35.patch
 
 build:
   number: 0
-  skip: true  # [not (osx | linux64)]
+  skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
 
