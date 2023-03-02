@@ -9,8 +9,6 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
-  patches:
-    - patches/0001-use-std-c-17-for-verilated.mk-verilator-verilator-35.patch
 
 build:
   number: 0
