@@ -44,7 +44,7 @@ test:
     - examples/make_hello_c
   commands:
     - verilator --version
-    - cd examples/make_hello_c && make clean default
+    - alias python3=python && cd examples/make_hello_c && make clean default
 
 about:
   home: https://veripool.org/wiki/verilator
