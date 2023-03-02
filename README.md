@@ -1,11 +1,11 @@
-About verilator
-===============
+About verilator-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/verilator-feedstock/blob/main/LICENSE.txt)
 
 Home: https://veripool.org/wiki/verilator
 
 Package license: GPL-3.0-only OR Artistic-2.0
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/verilator-feedstock/blob/main/LICENSE.txt)
 
 Summary: The fastest Verilog HDL simulator
 
@@ -63,6 +63,13 @@ Current build status
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
+                </a>
+              </td>
+            </tr><tr>
+              <td>osx_arm64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
             </tr>
