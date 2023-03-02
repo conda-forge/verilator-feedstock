@@ -20,14 +20,15 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - autoconf
-    - make
     - bison
-    - python
+    - help2man
+    - make
     - perl
+    - python
     - sed
   host:
-    - zlib
     - flex  # need to link against it for target
+    - zlib
   run:
     - {{ compiler('cxx') }}  # [osx]
     # there must be a way to derive this from compiler('cxx') but this should work
