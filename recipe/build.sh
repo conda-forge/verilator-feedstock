@@ -19,7 +19,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
     export LDFLAGS="$LDFLAGS -undefined dynamic_lookup"
 fi
 
-make -j$CPU_COUNT test
+if [[ "$CONDA_BUILD_CROSS_COMPILATION" != "1" ]]; then
+    # don't make test when cross compiling. At least until we figure out how to run in an emulator. qemu-static?
+    make -j$CPU_COUNT test
+fi
 make install
 
 sed -i "s|$BUILD_PREFIX|$PREFIX|g" $PREFIX/share/verilator/include/verilated.mk
