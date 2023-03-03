@@ -36,8 +36,7 @@ requirements:
     - {{ pin_compatible('flex') }}
     - make
     - perl
-  run_constrained:
-    - python  >=3.5
+    - python
 
 test:
   source_files:
