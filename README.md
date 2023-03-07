@@ -5,7 +5,7 @@ Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/verilator-feeds
 
 Home: https://veripool.org/wiki/verilator
 
-Package license: GPL-3.0-only OR Artistic-2.0
+Package license: LGPL-3.0-only OR Artistic-2.0
 
 Summary: The fastest Verilog HDL simulator
 
