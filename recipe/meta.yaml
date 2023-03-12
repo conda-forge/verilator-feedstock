@@ -9,12 +9,15 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+      - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch
 
 build:
   number: 0
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
+    - share/pkgconfig/verilator.pc
 
 requirements:
   build:
