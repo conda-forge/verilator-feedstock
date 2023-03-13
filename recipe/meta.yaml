@@ -1,6 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.006" %}
-{% set sha256 = "eb4ca4157ba854bc78c86173c58e8bd13311984e964006803dd45dc289450cfe" %}
+{% set version = "5.008" %}
+{% set sha256 = "1d19f4cd186eec3dfb363571e3fe2e6d3377386ead6febc6ad45402f0634d2a6" %}
 
 package:
   name: {{ name|lower }}
@@ -9,12 +9,15 @@ package:
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+      - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch
 
 build:
   number: 1
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
+    - share/pkgconfig/verilator.pc
 
 requirements:
   build:
