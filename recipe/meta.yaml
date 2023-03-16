@@ -13,7 +13,7 @@ source:
       - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
@@ -32,6 +32,7 @@ requirements:
   host:
     - flex  # need to link against it for target
     - zlib
+    - systemc-dev
   run:
     - {{ compiler('cxx') }}  # [osx]
     # there must be a way to derive this from compiler('cxx') but this should work
@@ -40,13 +41,21 @@ requirements:
     - make
     - perl
     - python
+  run_constrained:
+    - {{ pin_compatible('systemc-dev', exact=True) }}
 
 test:
+  requires:
+    - make
+    - {{ pin_compatible('systemc-dev', exact=True) }}
   source_files:
     - examples/make_hello_c
+    - examples/make_hello_sc
   commands:
     - verilator --version
-    - cd examples/make_hello_c && make clean default
+    - make -C examples/make_hello clean default VERILATOR='verilator --debugi 2'
+    # we want it to fail if systemc isn't supported, not silently do nothing, hence 'run' target
+    - make -C examples/make_hello_sc clean run VERILATOR='verilator --debugi 2'
 
 about:
   home: https://veripool.org/wiki/verilator
