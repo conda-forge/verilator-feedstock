@@ -8,6 +8,8 @@ cxx_compiler:
 - clangxx
 cxx_compiler_version:
 - '14'
+- '2.47'
+>>>>>>> cf/4.034:.ci_support/osx_64_.yaml
 macos_machine:
 - x86_64-apple-darwin13.4.0
 perl:
