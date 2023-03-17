@@ -18,7 +18,7 @@ build:
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
-    - share/pkgconfig/verilator.pc
+    - lib/pkgconfig/verilator.pc
 
 requirements:
   build:
@@ -45,30 +45,12 @@ requirements:
     - perl
     - python
 
-# test requirements aren't supported in subpackages, so we run the tests
-# on the metapackage
-# Is this really true?  I see it working with latest conda-build, maybe it changed
-# since I did this.
-test:
-  requires:
-    - pkgconfig
-    - cmake
-    - python >=3
-    - graphviz
-    # only need C compiler because cmake bails if it doesn't have one.
-    # at least with the CMakeLists.txt in the examples
-    - {{ compiler('c') }}
-    # re-install the default compiler package with activation scripts
-    # because it is the easiest way to get cmake to work in the sanity checks
-    # for cmake.  However, normal makefile based tests do not need this and
-    # will work fine because verilated.mk builds in the path to the c++ compiler
-    - {{ compiler('cxx') }}
-
 outputs:
   - name: verilator
     script: install.sh
     requirements:
       build:
+        - {{ compiler('cxx') }}
         - make
         - ripgrep
         - perl # avoid BSD sed weirdness
@@ -83,11 +65,37 @@ outputs:
         - make
         - perl
         - python
+    test:
+      requires:
+        - pkgconfig
+        - cmake
+        - make
+        - python >=3
+        - graphviz
+        # only need C compiler because cmake bails if it doesn't have one.
+        # at least with the CMakeLists.txt in the examples
+        - {{ compiler('c') }}
+        # re-install the default compiler package with activation scripts
+        # because it is the easiest way to get cmake to work in the sanity checks
+        # for cmake.  However, normal makefile based tests do not need this and
+        # will work fine because verilated.mk builds in the path to the c++ compiler
+        - {{ compiler('cxx') }}
+      commands:
+        - verilator --version
+        - cp -r "$PREFIX"/share/verilator/examples .
+        - for d in examples/*; do echo $d; make -C $d; done
   - name: verilator-debug
     script: install.sh
     requirements:
+      build:
+        - {{ compiler('cxx') }}
       run:
-        - {{ pin_subpackage('verilator', exact=True) }}
+          # depending on the verilator package here breaks testing the package because conda-build
+          # can't install the verilator pakckage yet?  wtf?
+          #- {{ pin_subpackage('verilator', exact=True) }}
+    test:
+      commands:
+        - verilator_bin_dbg --version
 
 about:
   home: https://veripool.org/wiki/verilator

@@ -8,6 +8,7 @@ case "$PKG_NAME" in
 	make install pkgconfigdir="$PREFIX/lib/pkgconfig"
 
 	rm "${PREFIX}/bin/verilator_bin_dbg"
+	# XXX what about verilator_coverage_bin_dbg?
 
 	# fixup install location of cmake files to match conda-forge layout
 	# This breaks cmake-based verilator examples because the cmake modules assume

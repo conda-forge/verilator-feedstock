@@ -7,6 +7,12 @@ unset VERILATOR_ROOT
 
 autoconf
 # as policy, conda-forge doesn't statically link any deps so --disable-partial-static
+# see commit message at https://github.com/verilator/verilator/commit/f00ff61559be0c6a5cbd07f25e264ce3e8652145
+# for details on what was being statically linked
+#
+# TODO consider adding --disable-defenv to configure to avoid baking the prefix into binaries
+#      removing the need for the C-string patch for relocatability.  Would need to set
+#      VERILATOR_ROOT and other env vars instead
 ./configure --prefix="$PREFIX" \
             --mandir="$PREFIX/man" \
             --disable-partial-static
