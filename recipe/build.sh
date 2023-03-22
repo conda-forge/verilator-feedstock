@@ -20,7 +20,7 @@ autoconf
 # Set DTVERSION_rev to something more interesting than
 # "UNKNOWN_REV (mod)" since we're building from tar and it
 # won't ever show the git version
-echo "static const char* const DTVERSION_rev = \"conda-forge built ${PKG_BUILD_STRING}\";" > src/config_rev.h
+echo "static const char* const DTVERSION_rev = \"conda-forge build ${PKG_BUILDNUM}\";" > src/config_rev.h
 
 make -j$CPU_COUNT
 $STRIP ./bin/verilator_bin
