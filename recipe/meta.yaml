@@ -49,7 +49,9 @@ requirements:
 
 test:                                                   # [win]
   source_files:                                         # [win]
+    # windows build doesn't install the examples and cmake_hello_c depends on make_hello_c
     - examples/cmake_hello_c                            # [win]
+    - examples/make_hello_c                             # [win]
   commands:                                             # [win]
     - echo on                                           # [win]
     - verilator_bin.exe --version                       # [win]
