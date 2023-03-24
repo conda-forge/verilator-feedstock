@@ -3,21 +3,22 @@
 {% set sha256 = "1d19f4cd186eec3dfb363571e3fe2e6d3377386ead6febc6ad45402f0634d2a6" %}
 
 package:
-  name: {{ name|lower }}
+  name: verilator-packages
   version: {{ version }}
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-      - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch
+    - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch  # remove next bump. see https://github.com/verilator/verilator/pull/4044 
+    - patches/0004-add-message-suggesting-verilator-debug-package.patch
 
 build:
-  number: 1
+  number: 2
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
-    - share/pkgconfig/verilator.pc
+    - lib/pkgconfig/verilator.pc
 
 requirements:
   build:
@@ -29,11 +30,14 @@ requirements:
     - perl
     - python
     - sed
+    - git # for patching
   host:
     - flex  # need to link against it for target
     - zlib
   run:
     - {{ compiler('cxx') }}  # [osx]
+    # The 4.034 branch was using this search and replace but it will break for osx-arm64
+    #- {{ compiler('cxx') | replace('gxx_linux','gxx_impl_linux') | replace('_osx-64', '') }}
     # there must be a way to derive this from compiler('cxx') but this should work
     - gxx_impl_linux-64  # [linux64]
     - {{ pin_compatible('flex') }}
@@ -41,12 +45,58 @@ requirements:
     - perl
     - python
 
-test:
-  source_files:
-    - examples/make_hello_c
-  commands:
-    - verilator --version
-    - cd examples/make_hello_c && make clean default
+outputs:
+  - name: verilator
+    script: install.sh
+    requirements:
+      build:
+        - {{ compiler('cxx') }}
+        - make
+        - ripgrep
+        - perl # avoid BSD sed weirdness
+      host:
+        - zlib
+        - flex  # need to link against it for target
+      run:
+        - {{ compiler('cxx') }}  # [osx]
+        # there must be a way to derive this from compiler('cxx') but this should work
+        - gxx_impl_linux-64  # [linux64]
+        - {{ pin_compatible('flex') }}
+        - make
+        - perl
+        - python
+    test:
+      requires:
+        - pkgconfig
+        - cmake
+        - make
+        - python >=3
+        - graphviz
+        # only need C compiler because cmake bails if it doesn't have one.
+        # at least with the CMakeLists.txt in the examples
+        - {{ compiler('c') }}
+        # re-install the default compiler package with activation scripts
+        # because it is the easiest way to get cmake to work in the sanity checks
+        # for cmake.  However, normal makefile based tests do not need this and
+        # will work fine because verilated.mk builds in the path to the c++ compiler
+        - {{ compiler('cxx') }}
+      commands:
+        - pkg-config --print-provides "$PKG_NAME"
+        - verilator --version
+        - cp -r "$PREFIX"/share/verilator/examples .
+        - for d in examples/*; do echo $d; make -C $d; done
+  - name: verilator-debug
+    script: install.sh
+    requirements:
+      build:
+        - {{ compiler('cxx') }}
+      run:
+          # depending on the verilator package here breaks testing the package because conda-build
+          # can't install the verilator pakckage yet?  wtf?
+          #- {{ pin_subpackage('verilator', exact=True) }}
+    test:
+      commands:
+        - verilator_bin_dbg --version
 
 about:
   home: https://veripool.org/wiki/verilator

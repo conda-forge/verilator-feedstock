@@ -1,0 +1,28 @@
+From 5d3dcbbc4aa73c4a47afcfd1cf3a506f2de4b844 Mon Sep 17 00:00:00 2001
+From: Tim Snyder <snyder.tim@gmail.com>
+Date: Thu, 24 Mar 2022 22:32:04 +0000
+Subject: [PATCH] add message suggesting verilator-debug package
+
+packaging verilator_bin_dbg separately because it is really big and
+I've never needed to use it
+---
+ bin/verilator | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/bin/verilator b/bin/verilator
+index b216b6f7d..959f07220 100755
+--- a/bin/verilator
++++ b/bin/verilator
+@@ -190,6 +190,9 @@ sub run {
+     if ($status) {
+         if ($! =~ /no such file or directory/i) {
+             warn "%Error: verilator: Misinstalled, or VERILATOR_ROOT might need to be in environment\n";
++            if ($Debug) {
++                warn "%Error: or you may need to install the verilator-debug package\n";
++            }
+         }
+         if ($Debug) {  # For easy rerunning
+             warn "%Error: export VERILATOR_ROOT=" . ($ENV{VERILATOR_ROOT} || "") . "\n";
+-- 
+2.35.1
+
