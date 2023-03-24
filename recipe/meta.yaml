@@ -28,6 +28,7 @@ requirements:
     - help2man  # [not win]
     - make      # [not win]
     - perl
+    - python
     - sed       # [not win]
     - git # for patching
   host:
