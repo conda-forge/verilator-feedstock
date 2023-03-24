@@ -72,6 +72,13 @@ Current build status
                   <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
+            </tr><tr>
+              <td>win_64</td>
+              <td>
+                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=win&configuration=win%20win_64_" alt="variant">
+                </a>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -87,6 +94,7 @@ Current release info
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-verilator-green.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-verilator--debug-green.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-verilator--packages-green.svg)](https://anaconda.org/conda-forge/verilator-packages) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/verilator-packages.svg)](https://anaconda.org/conda-forge/verilator-packages) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/verilator-packages.svg)](https://anaconda.org/conda-forge/verilator-packages) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/verilator-packages.svg)](https://anaconda.org/conda-forge/verilator-packages) |
 
 Installing verilator-packages
 =============================
@@ -98,16 +106,16 @@ conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `verilator, verilator-debug` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `verilator, verilator-debug, verilator-packages` can be installed with `conda`:
 
 ```
-conda install verilator verilator-debug
+conda install verilator verilator-debug verilator-packages
 ```
 
 or with `mamba`:
 
 ```
-mamba install verilator verilator-debug
+mamba install verilator verilator-debug verilator-packages
 ```
 
 It is possible to list all of the versions of `verilator` available on your platform with `conda`:
