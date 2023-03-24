@@ -11,7 +11,7 @@ source:
   sha256: {{ sha256 }}
   patches:
     - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch  # remove next bump. see https://github.com/verilator/verilator/pull/4044 
-    - patches/0004-add-message-suggesting-verilator-debug-package.patch
+    - patches/0004-add-message-suggesting-verilator-debug-package.patch  # [no win]
 
 build:
   number: 3
@@ -47,6 +47,7 @@ requirements:
     - perl
     - python
 
+# we don't split the package on windows because it doesn't include the big debug build by default
 test:                                                   # [win]
   source_files:                                         # [win]
     # windows build doesn't install the examples and cmake_hello_c depends on make_hello_c
