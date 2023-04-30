@@ -1,6 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.008" %}
-{% set sha256 = "1d19f4cd186eec3dfb363571e3fe2e6d3377386ead6febc6ad45402f0634d2a6" %}
+{% set version = "5.010" %}
+{% set sha256 = "ca82b57ce2d2b34eed3f04d5daf7eae6ad41276cda88efbb59ebd6467e65d635" %}
 
 package:
   name: verilator-packages
@@ -14,7 +14,7 @@ source:
     - patches/0004-add-message-suggesting-verilator-debug-package.patch
 
 build:
-  number: 2
+  number: 0
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
