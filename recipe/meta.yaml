@@ -10,7 +10,6 @@ source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: {{ sha256 }}
   patches:
-    - patches/0001-treat-DEFENV_VERILATOR_ROOT-as-c_str-for-conda-reloc.patch  # remove next bump. see https://github.com/verilator/verilator/pull/4044 
     - patches/0004-add-message-suggesting-verilator-debug-package.patch
 
 build:
