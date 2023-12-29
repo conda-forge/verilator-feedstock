@@ -1,5 +1,5 @@
-About verilator-feedstock
-=========================
+About verilator-packages-feedstock
+==================================
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/verilator-feedstock/blob/main/LICENSE.txt)
 
@@ -52,66 +52,24 @@ Current build status
         <table>
           <thead><tr><th>Variant</th><th>Status</th></tr></thead>
           <tbody><tr>
-              <td>linux_64_python3.10.____cpython</td>
+              <td>linux_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.10.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_python3.8.____cpython</td>
+              <td>osx_64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.8.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_" alt="variant">
                 </a>
               </td>
             </tr><tr>
-              <td>linux_64_python3.9.____cpython</td>
+              <td>osx_arm64</td>
               <td>
                 <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=linux&configuration=linux%20linux_64_python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_64_python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_64_python3.9.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_python3.10.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.10.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_python3.8.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.8.____cpython" alt="variant">
-                </a>
-              </td>
-            </tr><tr>
-              <td>osx_arm64_python3.9.____cpython</td>
-              <td>
-                <a href="https://dev.azure.com/conda-forge/feedstock-builds/_build/latest?definitionId=9671&branchName=main">
-                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_python3.9.____cpython" alt="variant">
+                  <img src="https://dev.azure.com/conda-forge/feedstock-builds/_apis/build/status/verilator-feedstock?branchName=main&jobName=osx&configuration=osx%20osx_arm64_" alt="variant">
                 </a>
               </td>
             </tr>
@@ -128,27 +86,28 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-verilator-green.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/verilator.svg)](https://anaconda.org/conda-forge/verilator) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-verilator--debug-green.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/verilator-debug.svg)](https://anaconda.org/conda-forge/verilator-debug) |
 
-Installing verilator
-====================
+Installing verilator-packages
+=============================
 
-Installing `verilator` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
+Installing `verilator-packages` from the `conda-forge` channel can be achieved by adding `conda-forge` to your channels with:
 
 ```
 conda config --add channels conda-forge
 conda config --set channel_priority strict
 ```
 
-Once the `conda-forge` channel has been enabled, `verilator` can be installed with `conda`:
+Once the `conda-forge` channel has been enabled, `verilator, verilator-debug` can be installed with `conda`:
 
 ```
-conda install verilator
+conda install verilator verilator-debug
 ```
 
 or with `mamba`:
 
 ```
-mamba install verilator
+mamba install verilator verilator-debug
 ```
 
 It is possible to list all of the versions of `verilator` available on your platform with `conda`:
@@ -218,17 +177,17 @@ Terminology
                   produce the finished article (built conda distributions)
 
 
-Updating verilator-feedstock
-============================
+Updating verilator-packages-feedstock
+=====================================
 
-If you would like to improve the verilator recipe or build a new
+If you would like to improve the verilator-packages recipe or build a new
 package version, please fork this repository and submit a PR. Upon submission,
 your changes will be run on the appropriate platforms to give the reviewer an
 opportunity to confirm that the changes result in a successful build. Once
 merged, the recipe will be re-built and uploaded automatically to the
 `conda-forge` channel, whereupon the built conda packages will be available for
 everybody to install and use from the `conda-forge` channel.
-Note that all branches in the conda-forge/verilator-feedstock are
+Note that all branches in the conda-forge/verilator-packages-feedstock are
 immediately built and any created packages are uploaded, so PRs should be based
 on branches in forks and branches in the main repository should only be used to
 build distinct package versions.
@@ -243,5 +202,6 @@ In order to produce a uniquely identifiable distribution:
 Feedstock Maintainers
 =====================
 
+* [@timkpaine](https://github.com/timkpaine/)
 * [@timsnyder](https://github.com/timsnyder/)
 
