@@ -15,9 +15,6 @@ source:
 build:
   number: 1
   skip: true  # [win]
-  has_prefix_files:
-    - share/verilator/include/verilated.mk
-    - lib/pkgconfig/verilator.pc
 
 requirements:
   build:
@@ -50,6 +47,10 @@ requirements:
 outputs:
   - name: verilator
     script: install.sh
+    build:
+      has_prefix_files:
+        - share/verilator/include/verilated.mk
+        - lib/pkgconfig/verilator.pc
     requirements:
       build:
         - {{ compiler('cxx') }}
