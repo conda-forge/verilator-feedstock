@@ -91,8 +91,8 @@ outputs:
         - pkg-config --print-provides "$PKG_NAME"
         - verilator --version
         - cp -r "$PREFIX"/share/verilator/examples .
-        # specify 'run' target so systemc examples fail if systemc isn't present
-        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d run; done
+        # specify 'SYSTEMC_EXISTS' so systemc examples fail if systemc isn't present
+        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1; done
   - name: verilator-debug
     script: install.sh
     requirements:
