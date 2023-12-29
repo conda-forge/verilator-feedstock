@@ -75,6 +75,7 @@ outputs:
         - cmake
         - make
         - python >=3
+        - pyfiglet
         - graphviz
         - {{ pin_compatible('systemc-dev', exact=True) }}
         # only need C compiler because cmake bails if it doesn't have one.
@@ -90,7 +91,7 @@ outputs:
         - verilator --version
         - cp -r "$PREFIX"/share/verilator/examples .
         # specify 'run' target so systemc examples fail if systemc isn't present
-        - for d in examples/*; do echo $d; make -C $d run; done
+        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d run; done
   - name: verilator-debug
     script: install.sh
     requirements:
