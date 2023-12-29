@@ -91,8 +91,13 @@ outputs:
         - pkg-config --print-provides "$PKG_NAME"
         - verilator --version
         - cp -r "$PREFIX"/share/verilator/examples .
+        # The following is how the systemc examples look for SystemC support, just curious 
+        # what this prints out
+        - shell mkdir -p build && cd build && cmake --find-package -DNAME=SystemCLanguage -DCMAKE_USE_PTHREADS_INIT=ON -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=EXIST -DThreads_FOUND=ON
         # specify 'SYSTEMC_EXISTS' so systemc examples fail if systemc isn't present
-        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1; done
+        # also  SYSTEMC_SET=true because cmake examples use more complex logic that needs
+        # to be short-circuited
+        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1 SYSTEMC_SET=true; done
   - name: verilator-debug
     script: install.sh
     requirements:
