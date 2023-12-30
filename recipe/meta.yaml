@@ -93,10 +93,13 @@ outputs:
         - cp -r "$PREFIX"/share/verilator/examples .
         # The following is how the systemc examples look for SystemC support, just curious 
         # what this prints out
-        - mkdir -p build && cd build && cmake --find-package -DNAME=SystemCLanguage -DCMAKE_USE_PTHREADS_INIT=ON -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=EXIST -DThreads_FOUND=ON
-        # specify 'SYSTEMC_EXISTS' so systemc examples fail if systemc isn't present
-        # also  SYSTEMC_SET=true because cmake examples use more complex logic that needs
-        # to be short-circuited
+        #- mkdir -p build && cd build && cmake --find-package -DNAME=SystemCLanguage -DCMAKE_USE_PTHREADS_INIT=ON -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=EXIST -DThreads_FOUND=ON
+        # looking at  <prefix>/share/cmake-3.28/Modules/CMakeFindPackageMode.cmake
+        # it explicitly won't enable any languages and finding SystemCLanguage will fail
+        # if C/CXX is not enabled.  So I'm pretty sure it is competely broken.  Toplevel
+        # cmake --help says --find-package is deprecated and should not use. Just specify
+        # SYSTEMC_SET=true to avoid the broken checking.
+        # specify 'SYSTEMC_EXISTS' so makefile systemc examples fail if systemc isn't present
         - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1 SYSTEMC_SET=true VERILATOR="$PREFIX"/bin/verilator; done
   - name: verilator-debug
     script: install.sh
