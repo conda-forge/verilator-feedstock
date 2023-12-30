@@ -97,7 +97,7 @@ outputs:
         # specify 'SYSTEMC_EXISTS' so systemc examples fail if systemc isn't present
         # also  SYSTEMC_SET=true because cmake examples use more complex logic that needs
         # to be short-circuited
-        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1 SYSTEMC_SET=true; done
+        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1 SYSTEMC_SET=true VERILATOR="$PREFIX"/bin/verilator; done
   - name: verilator-debug
     script: install.sh
     requirements:
