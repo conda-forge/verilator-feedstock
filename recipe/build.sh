@@ -23,7 +23,9 @@ autoconf
 echo "static const char* const DTVERSION_rev = \"conda-forge build ${PKG_BUILDNUM}\";" > src/config_rev.h
 
 make -j$CPU_COUNT
+ls -lh ./bin/
 $STRIP ./bin/verilator_bin
+ls -lh ./bin/
 
 
 if [[ "$(uname)" == "Darwin" ]]; then
