@@ -1,6 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.020" %}
-{% set sha256 = "41ca9abfadf8d2413efbff7f8277379733d0095957fe7769dc38f8fd1bc899a6" %}
+{% set version = "5.022" %}
+{% set sha256 = "2602d38c4da19133fad12c60570665d40cb8d014b958ab648ff44487b88bf60c" %}
 
 package:
   name: verilator-packages
