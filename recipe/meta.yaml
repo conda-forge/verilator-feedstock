@@ -15,9 +15,6 @@ source:
 build:
   number: 1
   skip: true  # [win]
-  has_prefix_files:
-    - share/verilator/include/verilated.mk
-    - lib/pkgconfig/verilator.pc
 
 requirements:
   build:
@@ -33,6 +30,7 @@ requirements:
   host:
     - flex  # need to link against it for target
     - zlib
+    - systemc-dev
   run:
     - {{ compiler('cxx') }}  # [osx]
     # The 4.034 branch was using this search and replace but it will break for osx-arm64
@@ -43,10 +41,16 @@ requirements:
     - make
     - perl
     - python
+  run_constrained:
+    - {{ pin_compatible('systemc-dev', max_pin='x.x.x') }}
 
 outputs:
   - name: verilator
     script: install.sh
+    build:
+      has_prefix_files:
+        - share/verilator/include/verilated.mk
+        - lib/pkgconfig/verilator.pc
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -64,13 +68,17 @@ outputs:
         - make
         - perl
         - python
+      run_constrained:
+        - {{ pin_compatible('systemc-dev', max_pin='x.x.x') }}
     test:
       requires:
         - pkgconfig
         - cmake
         - make
         - python >=3
+        - pyfiglet
         - graphviz
+        - {{ pin_compatible('systemc-dev', exact=True) }}
         # only need C compiler because cmake bails if it doesn't have one.
         # at least with the CMakeLists.txt in the examples
         - {{ compiler('c') }}
@@ -83,16 +91,26 @@ outputs:
         - pkg-config --print-provides "$PKG_NAME"
         - verilator --version
         - cp -r "$PREFIX"/share/verilator/examples .
-        - for d in examples/*; do echo $d; make -C $d; done
+        # The following is how the systemc examples look for SystemC support, just curious 
+        # what this prints out
+        #- mkdir -p build && cd build && cmake --find-package -DNAME=SystemCLanguage -DCMAKE_USE_PTHREADS_INIT=ON -DCOMPILER_ID=GNU -DLANGUAGE=CXX -DMODE=EXIST -DThreads_FOUND=ON
+        # looking at  <prefix>/share/cmake-3.28/Modules/CMakeFindPackageMode.cmake
+        # it explicitly won't enable any languages and finding SystemCLanguage will fail
+        # if C/CXX is not enabled.  So I'm pretty sure it is competely broken.  Toplevel
+        # cmake --help says --find-package is deprecated and should not use. Just specify
+        # SYSTEMC_SET=true to avoid the broken checking.
+        # specify 'SYSTEMC_EXISTS' so makefile systemc examples fail if systemc isn't present
+        - for d in examples/*; do pyfiglet -f ogre -w 200 $d; make -C $d SYSTEMC_EXISTS=1 SYSTEMC_SET=true VERILATOR="$PREFIX"/bin/verilator; done
   - name: verilator-debug
     script: install.sh
     requirements:
       build:
         - {{ compiler('cxx') }}
+      host:
+        # put verilator in host dependencies so it will be packaged first and enable testing verilator-debug
+        - {{ pin_subpackage('verilator', exact=True) }}
       run:
-          # depending on the verilator package here breaks testing the package because conda-build
-          # can't install the verilator pakckage yet?  wtf?
-          #- {{ pin_subpackage('verilator', exact=True) }}
+           {{ pin_subpackage('verilator', exact=True) }}
     test:
       commands:
         - verilator_bin_dbg --version
