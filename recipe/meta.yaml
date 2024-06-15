@@ -1,6 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.022" %}
-{% set sha256 = "3c2f5338f4b6ce7e2f47a142401acdd18cbf4c5da06092618d6d036c0afef12d" %}
+{% set version = "5.026" %}
+{% set sha256 = "87fdecf3967007d9ee8c30191ff2476f2a33635d0e0c6e3dbf345cc2f0c50b78" %}
 
 package:
   name: verilator-packages
@@ -13,7 +13,7 @@ source:
     - patches/0004-add-message-suggesting-verilator-debug-package.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win]
   has_prefix_files:
     - share/verilator/include/verilated.mk
@@ -35,6 +35,7 @@ requirements:
     - zlib
   run:
     - {{ compiler('cxx') }}  # [osx]
+    - {{ stdlib("c") }}    # [osx]
     # The 4.034 branch was using this search and replace but it will break for osx-arm64
     #- {{ compiler('cxx') | replace('gxx_linux','gxx_impl_linux') | replace('_osx-64', '') }}
     # there must be a way to derive this from compiler('cxx') but this should work
@@ -58,6 +59,7 @@ outputs:
         - flex  # need to link against it for target
       run:
         - {{ compiler('cxx') }}  # [osx]
+        - {{ stdlib("c") }}    # [osx]
         # there must be a way to derive this from compiler('cxx') but this should work
         - gxx_impl_linux-64  # [linux64]
         - {{ pin_compatible('flex') }}
@@ -89,6 +91,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
       run:
           # depending on the verilator package here breaks testing the package because conda-build
           # can't install the verilator pakckage yet?  wtf?
