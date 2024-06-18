@@ -85,7 +85,8 @@ outputs:
         - pkg-config --print-provides "$PKG_NAME"
         - verilator --version
         - cp -r "$PREFIX"/share/verilator/examples .
-        - for d in examples/*; do echo $d; make -C $d; done
+        - for d in examples/*; do echo $d; make -C $d; done  # [not osx]
+        - for d in examples/make*; do echo $d; make -C $d; done  # [osx]
   - name: verilator-debug
     script: install.sh
     requirements:
