@@ -52,6 +52,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('cxx') }}
+        - {{ stdlib("c") }}
         - make
         - ripgrep
         - perl # avoid BSD sed weirdness
