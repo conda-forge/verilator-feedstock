@@ -16,7 +16,7 @@ build:
   number: 0
   skip: true  # [win]
   has_prefix_files:
-    - share/verilator/include/verilated.mk
+    - share/verilator/include/verilated.mk  # [not osx]
     - lib/pkgconfig/verilator.pc
 
 requirements:
