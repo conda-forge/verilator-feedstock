@@ -1,6 +1,6 @@
 {% set name = "verilator" %}
-{% set version = "5.030" %}
-{% set sha256 = "b9e7e97257ca3825fcc75acbed792b03c3ec411d6808ad209d20917705407eac" %}
+{% set version = "5.032" %}
+{% set sha256 = "5a262564b10be8bdb31ff4fb67d77bcf5f52fc1b4e6c88d5ca3264fb481f1e41" %}
 
 package:
   name: verilator-packages
@@ -16,7 +16,7 @@ build:
   number: 0
   skip: true  # [win]
   has_prefix_files:
-    - share/verilator/include/verilated.mk
+    - share/verilator/include/verilated.mk  # [not osx]
     - lib/pkgconfig/verilator.pc
 
 requirements:
