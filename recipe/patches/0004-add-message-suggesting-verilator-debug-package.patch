@@ -1,4 +1,4 @@
-From 5d3dcbbc4aa73c4a47afcfd1cf3a506f2de4b844 Mon Sep 17 00:00:00 2001
+From 49e61c684d76547e970020f70caa9443874a7729 Mon Sep 17 00:00:00 2001
 From: Tim Snyder <snyder.tim@gmail.com>
 Date: Thu, 24 Mar 2022 22:32:04 +0000
 Subject: [PATCH] add message suggesting verilator-debug package
@@ -10,10 +10,10 @@ I've never needed to use it
  1 file changed, 3 insertions(+)
 
 diff --git a/bin/verilator b/bin/verilator
-index b216b6f7d..959f07220 100755
+index 8da3c0ddc..d7308e7e1 100755
 --- a/bin/verilator
 +++ b/bin/verilator
-@@ -190,6 +190,9 @@ sub run {
+@@ -240,6 +240,9 @@ sub run {
      if ($status) {
          if ($! =~ /no such file or directory/i) {
              warn "%Error: verilator: Misinstalled, or VERILATOR_ROOT might need to be in environment\n";
@@ -24,5 +24,5 @@ index b216b6f7d..959f07220 100755
          if ($Debug) {  # For easy rerunning
              warn "%Error: export VERILATOR_ROOT=" . ($ENV{VERILATOR_ROOT} || "") . "\n";
 -- 
-2.35.1
+2.51.0
 
