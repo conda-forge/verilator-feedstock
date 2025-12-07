@@ -1,0 +1,55 @@
+From 1f571e745b153eec5b4216fe82e3a654f2cb1128 Mon Sep 17 00:00:00 2001
+From: Codex <codex@pyro>
+Date: Thu, 4 Dec 2025 20:29:00 +0000
+Subject: [PATCH] configure: allow cross builds to detect C++14 support
+
+Selectively switch the `_MY_CXX_CHECK_CXX_VER` probe to
+`AC_COMPILE_IFELSE` when `cross_compiling` is true so we only verify that
+the compiler accepts the feature test without trying to execute it. The
+helper previously used `AC_RUN_IFELSE`, which fails under cross builds
+because the test binary cannot execute on the host. Native builds still
+execute the probe via `AC_RUN_IFELSE`.
+---
+ configure.ac | 20 +++++++++++++++++---
+ 1 file changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3cd840d..8270c82 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -605,16 +605,28 @@ AC_SUBST(CFG_LIBS)
+ AC_DEFUN([_MY_CXX_CHECK_CXX_VER],
+    [# _MY_CXX_CHECK_CXX_VER(flag) -- Check if compiler runs C++14
+     # Set $_my_result
+-    AC_RUN_IFELSE(
+-     [AC_LANG_PROGRAM([#include <thread>
++    if test "x$cross_compiling" = "xyes"; then
++        AC_COMPILE_IFELSE(
++         [AC_LANG_PROGRAM([#include <thread>
+ #if (__cplusplus < 201402L)
+ # error "Too old"
+ #endif
+-    ], [[
+-     ]])],
+-     [_my_result=yes],
+-     [_my_result=no],
+-     [_my_result=no])
++        ], [[
++         ]])],
++         [_my_result=yes],
++         [_my_result=no])
++    else
++        AC_RUN_IFELSE(
++         [AC_LANG_PROGRAM([#include <thread>
++#if (__cplusplus < 201402L)
++# error "Too old"
++#endif
++        ], [[
++         ]])],
++         [_my_result=yes],
++         [_my_result=no],
++         [_my_result=no])
++    fi
+    ])
+ 
+ # Add $CFG_CXXFLAGS_STD only if can't compile correctly otherwise,
