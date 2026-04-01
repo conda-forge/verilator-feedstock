@@ -4,7 +4,7 @@
 
 package:
   name: verilator-packages
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
@@ -110,7 +110,7 @@ about:
   license: LGPL-3.0-only OR Artistic-2.0
   license_file:
     - LICENSE
-    - Artistic
+    - LICENSES/Artistic-2.0.txt
   summary: The fastest Verilog HDL simulator
 
   description: |
