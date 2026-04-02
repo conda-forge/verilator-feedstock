@@ -1,10 +1,10 @@
 {% set name = "verilator" %}
-{% set version = "5.044" %}
-{% set sha256 = "ded2a4a96e3b836ddc9fd5d01127999d981adee4d19133ff819b7129897d801a" %}
+{% set version = "5.046" %}
+{% set sha256 = "002bc6d92b203eb8b4612e1d198d8108517d4ec9859e131ef328015352fe6d0c" %}
 
 package:
   name: verilator-packages
-  version: {{ version }}
+  version: "{{ version }}"
 
 source:
   url: https://github.com/{{ name }}/{{ name }}/archive/v{{ version }}.tar.gz
@@ -110,7 +110,7 @@ about:
   license: LGPL-3.0-only OR Artistic-2.0
   license_file:
     - LICENSE
-    - Artistic
+    - LICENSES/Artistic-2.0.txt
   summary: The fastest Verilog HDL simulator
 
   description: |
