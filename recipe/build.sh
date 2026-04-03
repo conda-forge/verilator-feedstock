@@ -5,6 +5,20 @@ set -xe
 # Just to align with the Verilator installing docs
 unset VERILATOR_ROOT
 
+if [[ "$OS" == "Windows_NT" ]]; then
+    # Autoconf under MSYS should use a GNU-like toolchain, not cl.exe.
+    if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
+        export CC=x86_64-w64-mingw32-gcc
+        export CXX=x86_64-w64-mingw32-g++
+    elif command -v gcc >/dev/null 2>&1; then
+        export CC=gcc
+        export CXX=g++
+    else
+        echo "No GNU C/C++ compiler found in PATH on Windows/MSYS"
+        exit 1
+    fi
+fi
+
 autoconf
 # as policy, conda-forge doesn't statically link any deps so --disable-partial-static
 # see commit message at https://github.com/verilator/verilator/commit/f00ff61559be0c6a5cbd07f25e264ce3e8652145
