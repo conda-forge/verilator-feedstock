@@ -50,8 +50,23 @@ fi
 echo "Using CC=${CC:-unset} CXX=${CXX:-unset}"
 
 if [[ "$OS" == "Windows_NT" || "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
-    echo "Skipping autoconf on Windows; using bundled configure script"
-else
+    # In conda-build Windows shells, m4 may exist in mingw/bin but not /usr/bin.
+    if ! command -v m4 >/dev/null 2>&1; then
+        for cand in \
+            "$BUILD_PREFIX/Library/usr/bin/m4.exe" \
+            "$BUILD_PREFIX/Library/mingw-w64/bin/m4.exe" \
+            "$BUILD_PREFIX/Library/mingw64/bin/m4.exe"
+        do
+            if [[ -x "$cand" ]]; then
+                cp -f "$cand" /usr/bin/m4.exe || true
+                ln -sf /usr/bin/m4.exe /usr/bin/m4 || true
+                break
+            fi
+        done
+    fi
+fi
+
+if [[ ! -x ./configure ]]; then
     autoconf
 fi
 # as policy, conda-forge doesn't statically link any deps so --disable-partial-static
