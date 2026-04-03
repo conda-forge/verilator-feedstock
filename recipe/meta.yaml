@@ -14,7 +14,7 @@ source:
     - patches/0005-cross-compile-cxx14-detection.patch
 
 build:
-  number: 3
+  number: 4
   has_prefix_files:
     - share/verilator/include/verilated.mk  # [not osx]
     - lib/pkgconfig/verilator.pc

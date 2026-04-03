@@ -7,7 +7,29 @@ unset VERILATOR_ROOT
 
 if [[ "$OS" == "Windows_NT" || "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
     # Autoconf under MSYS should use a GNU-like toolchain, not cl.exe.
-    if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
+    cc_candidates=(
+        "$BUILD_PREFIX/Library/mingw-w64/bin/x86_64-w64-mingw32-gcc.exe"
+        "$BUILD_PREFIX/Library/mingw64/bin/x86_64-w64-mingw32-gcc.exe"
+        "$BUILD_PREFIX/Library/mingw-w64/bin/gcc.exe"
+        "$BUILD_PREFIX/Library/mingw64/bin/gcc.exe"
+    )
+    cxx_candidates=(
+        "$BUILD_PREFIX/Library/mingw-w64/bin/x86_64-w64-mingw32-g++.exe"
+        "$BUILD_PREFIX/Library/mingw64/bin/x86_64-w64-mingw32-g++.exe"
+        "$BUILD_PREFIX/Library/mingw-w64/bin/g++.exe"
+        "$BUILD_PREFIX/Library/mingw64/bin/g++.exe"
+    )
+
+    for cc in "${cc_candidates[@]}"; do
+        [[ -x "$cc" ]] && export CC="$cc" && break
+    done
+    for cxx in "${cxx_candidates[@]}"; do
+        [[ -x "$cxx" ]] && export CXX="$cxx" && break
+    done
+
+    if [[ -n "${CC:-}" && -n "${CXX:-}" ]]; then
+        :
+    elif command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
         export CC=x86_64-w64-mingw32-gcc
         export CXX=x86_64-w64-mingw32-g++
     elif command -v x86_64-w64-mingw32-gcc-posix >/dev/null 2>&1; then

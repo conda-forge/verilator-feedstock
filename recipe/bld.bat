@@ -16,5 +16,5 @@ if not exist "%BASH%" (
 "%BASH%" -lc "true"
 if errorlevel 1 exit /b 1
 
-"%BASH%" -lc "set -e; export PATH=/mingw64/bin:/mingw32/bin:$PATH; cd \"$SRC_DIR\"; bash \"$RECIPE_DIR/build.sh\""
+"%BASH%" -lc "set -e; export PATH=\"$BUILD_PREFIX/Library/mingw-w64/bin:$BUILD_PREFIX/Library/mingw64/bin:$BUILD_PREFIX/Library/usr/bin:$PATH\"; cd \"$SRC_DIR\"; bash \"$RECIPE_DIR/build.sh\""
 if errorlevel 1 exit /b 1
