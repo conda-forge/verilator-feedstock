@@ -10,6 +10,12 @@ if [[ "$OS" == "Windows_NT" || "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
     if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
         export CC=x86_64-w64-mingw32-gcc
         export CXX=x86_64-w64-mingw32-g++
+    elif command -v x86_64-w64-mingw32-gcc-posix >/dev/null 2>&1; then
+        export CC=x86_64-w64-mingw32-gcc-posix
+        export CXX=x86_64-w64-mingw32-g++-posix
+    elif command -v x86_64-w64-mingw32-gcc-win32 >/dev/null 2>&1; then
+        export CC=x86_64-w64-mingw32-gcc-win32
+        export CXX=x86_64-w64-mingw32-g++-win32
     elif command -v gcc >/dev/null 2>&1; then
         export CC=gcc
         export CXX=g++

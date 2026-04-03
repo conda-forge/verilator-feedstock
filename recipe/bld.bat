@@ -13,5 +13,8 @@ if not exist "%BASH%" (
     exit /b 1
 )
 
-"%BASH%" -lc "set -e; cd \"$SRC_DIR\"; bash \"$RECIPE_DIR/build.sh\""
+"%BASH%" -lc "true"
+if errorlevel 1 exit /b 1
+
+"%BASH%" -lc "set -e; export PATH=/mingw64/bin:/mingw32/bin:$PATH; cd \"$SRC_DIR\"; bash \"$RECIPE_DIR/build.sh\""
 if errorlevel 1 exit /b 1
