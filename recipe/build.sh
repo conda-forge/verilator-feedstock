@@ -5,7 +5,7 @@ set -xe
 # Just to align with the Verilator installing docs
 unset VERILATOR_ROOT
 
-if [[ "$OS" == "Windows_NT" ]]; then
+if [[ "$OS" == "Windows_NT" || "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
     # Autoconf under MSYS should use a GNU-like toolchain, not cl.exe.
     if command -v x86_64-w64-mingw32-gcc >/dev/null 2>&1; then
         export CC=x86_64-w64-mingw32-gcc
@@ -19,6 +19,8 @@ if [[ "$OS" == "Windows_NT" ]]; then
     fi
 fi
 
+echo "Using CC=${CC:-unset} CXX=${CXX:-unset}"
+
 autoconf
 # as policy, conda-forge doesn't statically link any deps so --disable-partial-static
 # see commit message at https://github.com/verilator/verilator/commit/f00ff61559be0c6a5cbd07f25e264ce3e8652145
@@ -27,7 +29,7 @@ autoconf
 # TODO consider adding --disable-defenv to configure to avoid baking the prefix into binaries
 #      removing the need for the C-string patch for relocatability.  Would need to set
 #      VERILATOR_ROOT and other env vars instead
-./configure --prefix="$PREFIX" \
+CC="${CC:-gcc}" CXX="${CXX:-g++}" ./configure --prefix="$PREFIX" \
             --mandir="$PREFIX/man" \
             --disable-partial-static
 

@@ -14,7 +14,7 @@ source:
     - patches/0005-cross-compile-cxx14-detection.patch
 
 build:
-  number: 1
+  number: 2
   has_prefix_files:
     - share/verilator/include/verilated.mk  # [not osx]
     - lib/pkgconfig/verilator.pc
@@ -25,6 +25,7 @@ requirements:
     - {{ compiler('cxx') }}  # [not win]
     - {{ stdlib("c") }}
     - m2w64-toolchain  # [win]
+    - m2w64-gcc  # [win]
     - autoconf  # [not win]
     - bison  # [not win]
     - m2-autoconf  # [win]
