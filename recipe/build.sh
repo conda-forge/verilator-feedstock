@@ -49,7 +49,11 @@ fi
 
 echo "Using CC=${CC:-unset} CXX=${CXX:-unset}"
 
-autoconf
+if [[ "$OS" == "Windows_NT" || "$(uname -s)" =~ MINGW|MSYS|CYGWIN ]]; then
+    echo "Skipping autoconf on Windows; using bundled configure script"
+else
+    autoconf
+fi
 # as policy, conda-forge doesn't statically link any deps so --disable-partial-static
 # see commit message at https://github.com/verilator/verilator/commit/f00ff61559be0c6a5cbd07f25e264ce3e8652145
 # for details on what was being statically linked
