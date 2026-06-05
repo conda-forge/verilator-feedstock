@@ -14,27 +14,30 @@ source:
     - patches/0005-cross-compile-cxx14-detection.patch
 
 build:
-  number: 0
-  skip: true  # [win]
+  number: 1
   has_prefix_files:
-    - share/verilator/include/verilated.mk  # [not osx]
-    - lib/pkgconfig/verilator.pc
+    - share/verilator/include/verilated.mk  # [not osx and not win]
+    - Library/share/verilator/include/verilated.mk  # [win]
+    - lib/pkgconfig/verilator.pc  # [not win]
+    - Library/lib/pkgconfig/verilator.pc  # [win]
 
 requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ stdlib("c") }}
-    - autoconf
-    - bison
+    - autoconf  # [not win]
+    - bison  # [not win]
+    - cmake  # [win]
     - distro
-    - help2man
-    - make
+    - help2man  # [not win]
+    - make  # [not win]
     - perl
     - python
-    - sed
+    - sed  # [not win]
     - git # for patching
+    - winflexbison  # [win]
   host:
-    - flex  # need to link against it for target
+    - flex  # [not win] need to link against it for target
     - zlib
   run:
     - {{ compiler('cxx') }}  # [osx]
@@ -43,56 +46,60 @@ requirements:
     #- {{ compiler('cxx') | replace('gxx_linux','gxx_impl_linux') | replace('_osx-64', '') }}
     # there must be a way to derive this from compiler('cxx') but this should work
     - gxx_impl_linux-64  # [linux64]
-    - {{ pin_compatible('flex') }}
-    - make
+    - {{ pin_compatible('flex') }}  # [not win]
+    - make  # [not win]
     - perl
     - python
 
 outputs:
   - name: verilator
-    script: install.sh
+    script: install.sh  # [not win]
+    script: install.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
         - {{ stdlib("c") }}
-        - make
-        - ripgrep
-        - perl # avoid BSD sed weirdness
+        - cmake  # [win]
+        - make  # [not win]
+        - ripgrep  # [not win]
+        - perl  # [not win] avoid BSD sed weirdness
       host:
         - zlib
-        - flex  # need to link against it for target
+        - flex  # [not win] need to link against it for target
       run:
         - {{ compiler('cxx') }}  # [osx]
         - {{ stdlib("c") }}    # [osx]
         # there must be a way to derive this from compiler('cxx') but this should work
         - gxx_impl_linux-64  # [linux64]
-        - {{ pin_compatible('flex') }}
-        - make
+        - {{ pin_compatible('flex') }}  # [not win]
+        - make  # [not win]
         - perl
         - python
     test:
       requires:
-        - pkgconfig
+        - pkgconfig  # [not win]
         - cmake
-        - make
+        - make  # [not win]
         - python >=3
-        - graphviz
+        - graphviz  # [not win]
         # only need C compiler because cmake bails if it doesn't have one.
         # at least with the CMakeLists.txt in the examples
-        - {{ compiler('c') }}
+        - {{ compiler('c') }}  # [not win]
         # re-install the default compiler package with activation scripts
         # because it is the easiest way to get cmake to work in the sanity checks
         # for cmake.  However, normal makefile based tests do not need this and
         # will work fine because verilated.mk builds in the path to the c++ compiler
-        - {{ compiler('cxx') }}
+        - {{ compiler('cxx') }}  # [not win]
       commands:
-        - pkg-config --print-provides "$PKG_NAME"
+        - where verilator  # [win]
+        - pkg-config --print-provides "$PKG_NAME"  # [not win]
         - verilator --version
-        - cp -r "$PREFIX"/share/verilator/examples .
-        - for d in examples/*; do echo $d; make -C $d; done  # [not osx]
+        - cp -r "$PREFIX"/share/verilator/examples .  # [not win]
+        - for d in examples/*; do echo $d; make -C $d; done  # [not osx and not win]
         - for d in examples/make*; do echo $d; make -C $d; done  # [osx]
   - name: verilator-debug
-    script: install.sh
+    script: install.sh  # [not win]
+    script: install.bat  # [win]
     requirements:
       build:
         - {{ compiler('cxx') }}
@@ -103,6 +110,7 @@ outputs:
           #- {{ pin_subpackage('verilator', exact=True) }}
     test:
       commands:
+        - where verilator_bin_dbg  # [win]
         - verilator_bin_dbg --version
 
 about:
