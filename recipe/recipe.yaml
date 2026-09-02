@@ -1,0 +1,171 @@
+schema_version: 1
+
+context:
+  name: verilator
+  version: "5.050"
+  sha256: ec6723f30c1798b1fbbbed97364f09c431fb4875577c314f37240e99b60a4a04
+
+recipe:
+  name: verilator-packages
+  version: ${{ version }}
+
+source:
+  url: https://github.com/${{ name }}/${{ name }}/archive/v${{ version }}.tar.gz
+  sha256: ${{ sha256 }}
+  patches:
+    - patches/0004-add-message-suggesting-verilator-debug-package.patch
+    - patches/0005-cross-compile-cxx14-detection.patch
+
+build:
+  number: 1
+
+outputs:
+  - staging:
+      name: verilator-build
+    build:
+      script:
+        file: build
+        env:
+          CONDA_BUILD_CROSS_COMPILATION: ${{ "1" if build_platform != target_platform else "0" }}
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - distro
+        - perl
+        - python
+        - git  # for patching
+        - if: not win
+          then:
+            - autoconf
+            - bison
+            - help2man
+            - make
+            - sed
+        - if: win
+          then:
+            - cmake
+            - winflexbison
+      host:
+        - zlib
+        - if: not win
+          then: flex  # need to link against it for target
+
+  - package:
+      name: verilator
+    inherit: verilator-build
+    build:
+      script: install
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+        - if: win
+          then: cmake
+        - if: not win
+          then:
+            - make
+            - ripgrep
+            - perl  # avoid BSD sed weirdness
+      host:
+        - zlib
+        - if: not win
+          then: flex  # need to link against it for target
+      run:
+        - perl
+        - python
+        - if: osx
+          then:
+            - ${{ compiler('cxx') }}
+            - ${{ stdlib("c") }}
+        # there must be a way to derive this from compiler('cxx') but this should work
+        - if: linux and x86_64
+          then: gxx_impl_linux-64
+        - if: not win
+          then:
+            - ${{ pin_compatible('flex') }}
+            - make
+    tests:
+      - requirements:
+          run:
+            - cmake
+            - python >=3
+            - if: not win
+              then:
+                - pkgconfig
+                - make
+                - graphviz
+                # only need C compiler because cmake bails if it doesn't have one.
+                # at least with the CMakeLists.txt in the examples
+                - ${{ compiler('c') }}
+                # re-install the default compiler package with activation scripts
+                # because it is the easiest way to get cmake to work in the sanity checks
+                # for cmake.  However, normal makefile based tests do not need this and
+                # will work fine because verilated.mk builds in the path to the c++ compiler
+                - ${{ compiler('cxx') }}
+        script:
+          - if: win
+            then: where verilator
+          - if: not win
+            then: pkg-config --print-provides verilator
+          - verilator --version
+          - if: not win
+            then: cp -r "$PREFIX"/share/verilator/examples .
+          - if: linux
+            then: for d in examples/*; do echo $d; make -C $d; done
+          - if: osx
+            then: for d in examples/make*; do echo $d; make -C $d; done
+
+  - package:
+      name: verilator-debug
+    inherit: verilator-build
+    build:
+      script: install
+    requirements:
+      build:
+        - ${{ compiler('cxx') }}
+        - ${{ stdlib("c") }}
+      run:
+        # depending on the verilator package here breaks testing the package because
+        # the solver can't install the verilator package yet
+        # - ${{ pin_subpackage('verilator', exact=True) }}
+    tests:
+      - script:
+          - if: win
+            then: where verilator_bin_dbg
+          - verilator_bin_dbg --version
+
+about:
+  license: LGPL-3.0-only OR Artistic-2.0
+  license_file:
+    - LICENSE
+    - LICENSES/Artistic-2.0.txt
+  summary: The fastest Verilog HDL simulator
+  description: |
+    Welcome to Verilator, the fastest Verilog HDL simulator.
+      • Accepts synthesizable Verilog or SystemVerilog
+      • Performs lint code-quality checks
+      • Compiles into multithreaded C++, or SystemC
+      • Creates XML to front-end your own tools
+    Fast
+      • Outperforms many commercial simulators
+      • Single- and multi-threaded output models
+    Widely Used
+      • Wide industry and academic deployment
+      • Out-of-the-box support from Arm, and RISC-V vendor IP
+    Community Driven & Openly Licensed
+      • Guided by the CHIPS Alliance and Linux Foundation
+      • Open, and free as in both speech and beer
+      • More simulation for your verification budget
+    Commercial Support Available
+      • Commercial support contracts
+      • Design support contracts
+      • Enhancement contracts
+  homepage: https://veripool.org/wiki/verilator
+  documentation: https://www.veripool.org/projects/verilator/wiki/Documentation
+  repository: https://github.com/verilator/verilator
+
+extra:
+  recipe-maintainers:
+    - timkpaine
+    - timsnyder
