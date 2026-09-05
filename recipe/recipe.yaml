@@ -2,8 +2,8 @@ schema_version: 1
 
 context:
   name: verilator
-  version: "5.050"
-  sha256: ec6723f30c1798b1fbbbed97364f09c431fb4875577c314f37240e99b60a4a04
+  version: "5.052"
+  sha256: 8c8d2e11e6ad32f641dd250742a94195ddecb912e2e2dabe2f42ddbbb99c1092
 
 recipe:
   name: verilator-packages
@@ -17,7 +17,7 @@ source:
     - patches/0005-cross-compile-cxx14-detection.patch
 
 build:
-  number: 1
+  number: 0
 
 outputs:
   - staging:
@@ -42,8 +42,7 @@ outputs:
             - help2man
             - make
             - sed
-        - if: win
-          then:
+          else:
             - cmake
             - winflexbison
       host:
@@ -62,11 +61,10 @@ outputs:
         - ${{ stdlib("c") }}
         - if: win
           then: cmake
-        - if: not win
-          then:
+          else:
             - make
             - ripgrep
-            - perl  # avoid BSD sed weirdness
+            - perl
       host:
         - zlib
         - if: not win
@@ -106,8 +104,7 @@ outputs:
         script:
           - if: win
             then: where verilator
-          - if: not win
-            then: pkg-config --print-provides verilator
+            else: pkg-config --print-provides verilator
           - verilator --version
           - if: not win
             then: cp -r "$PREFIX"/share/verilator/examples .
