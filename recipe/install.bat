@@ -15,7 +15,8 @@ if not exist "%SRC_DIR%\build" (
 cd /d "%SRC_DIR%\build"
 if errorlevel 1 exit /b 1
 
-nmake install
+:: Install staged binaries without rerunning generators from the build environment.
+cmake --install .
 if errorlevel 1 exit /b 1
 
 if exist "%LIBRARY_PREFIX%\bin\verilator_bin_dbg.exe" del "%LIBRARY_PREFIX%\bin\verilator_bin_dbg.exe"
